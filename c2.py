@@ -13,7 +13,9 @@ def index():
 
 @app.route('/profile/<int:uid>/',methods=['GET','post'])
 def profile(uid):
-    return render_template("profile.html", uid = uid)
+    colors = ('red', 'black')
+    infos = {'name': 'abc', 'id': '123'}
+    return render_template("profile.html", uid=uid, colors=colors, infos=infos)
 
 if __name__ == '__main__':
     app.run(debug=True)
