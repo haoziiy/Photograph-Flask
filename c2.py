@@ -58,17 +58,23 @@ def login():
     flash('登录成功') # 发送至flash message ( 可以理解为发送到session的一个buffer )
     return 'ok'
 
+@app.route('/log/<level>/<msg>/')
+def log(level, msg):
+    dict = {'warn': logging.WARN, 'error': logging.ERROR, 'info': logging.INFO}
+    if dict.has_key(level):
+        app.logger.log(dict[level], msg)
+    return 'logged:' + msg
 
 def set_logger():
-    info_file_handler = RotatingFileHandler('\\User\\sherry\\PycharmProjects\\photograph\\logs\\info.txt')
+    info_file_handler = RotatingFileHandler("/Users/sherry/PycharmProjects/c2/logs/info.txt")
     info_file_handler.setLevel(logging.INFO)
     app.logger.addHandler(info_file_handler)
 
-    warn_file_handler = RotatingFileHandler('\\User\\sherry\\PycharmProjects\\photograph\\logs\\warn.txt')
+    warn_file_handler = RotatingFileHandler('/Users/sherry/PycharmProjects/c2/logs/warn.txt')
     warn_file_handler.setLevel(logging.WARN)
     app.logger.addHandler(warn_file_handler)
 
-    error_file_handler = RotatingFileHandler('\\User\\sherry\\PycharmProjects\\photograph\\logs\\error.txt')
+    error_file_handler = RotatingFileHandler('/Users/sherry/PycharmProjects/c2/logs/error.txt')
     error_file_handler.setLevel(logging.ERROR)
     app.logger.addHandler(error_file_handler)
 
