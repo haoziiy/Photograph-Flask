@@ -1,6 +1,7 @@
 # -*- encoding=UTF-8 -*-
 
 from haostagram import db
+import random
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -11,7 +12,7 @@ class User(db.Model):
     def __init__(self, username,password):
         self.username = username
         self.password = password
-        self.head_url = 'http://images.nowcoder.com/head/' + str(range(0, 1000)) + 'm.png'
+        self.head_url = 'http://images.nowcoder.com/head/' + str(random.randint(0, 1000)) + 'm.png'
 
     def __repr__(self):
         return '<User %d %s>' % (self.id, self.username)
