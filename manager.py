@@ -1,13 +1,13 @@
 # -*- encoding=UTF-8 -*-
-from flask-script import Manager
 from c2 import app
-
+from flask_script import Manager
 manager = Manager(app)
 
-@manager.option('-n',  '--name', dest='name', default='nowcoder')
+@manager.option('-n',  '--name', dest='name', default='haoziiy')
 def hello(name):
     print 'hello', name
 
+# 装饰器方式表示这是个命令
 @manager.command
 def initialize_database():
     'initialize database'
