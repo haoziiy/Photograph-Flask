@@ -1,7 +1,7 @@
 # -*- encoding=UTF-8 -*-
 from haostagram import app, db
 from flask_script import Manager
-from haostagram.models import  User, Image
+from haostagram.models import  User, Image, Comment
 import  random
 
 manager = Manager(app)
@@ -17,6 +17,9 @@ def init_database():
         db.session.add(User('User' + str(i), 'a' + str(i)))
         for j in range(0, 3):  # 每人发三张图
             db.session.add(Image(get_image_url(), i + 1))
+            for k in range(0, 3):
+                db.session.add(Comment('this is a comment' + str(k), 1 + 3 * i + j, i + 1))
+
     db.session.commit()
 
 
