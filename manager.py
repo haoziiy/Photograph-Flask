@@ -7,6 +7,7 @@ import  random
 
 manager = Manager(app)
 
+# 随机头像url
 def get_image_url():
     return 'http://images.nowcoder.com/head/' + str(random.randint(0, 1000)) + 'm.png'
 
@@ -22,6 +23,7 @@ def init_database():
                 db.session.add(Comment('this is a comment' + str(k), 1 + 3 * i + j, i + 1))
     db.session.commit()
 
+    # 查
     # print 1, User.query.all()
     # print 2, User.query.get(3)
     # print 3, User.query.filter_by(id=5).first()
@@ -30,8 +32,26 @@ def init_database():
     # print 6, User.query.filter(or_(User.id == 88, User.id == 99)).all()
     # print 7, User.query.filter(and_(User.id > 88, User.id < 99)).all()
     # print 8, User.query.filter(and_(User.id > 88, User.id < 99)).first_or_404()
-    print 9, User.query.paginate(page=1, per_page=10).items
+    # print 9, User.query.paginate(page=1, per_page=10).items
 
+    # user = User.query.get(1)
+    # print 10, user.images.all()
+    # image = Image.query.get(1)
+    # print 11, image.user
+
+    # 改
+    for i in range(50, 100, 2):
+        user = User.query.get(i)
+        user.username = 'New1' + user.username
+
+    User.query.filter_by(id=51).update({'username': '[New2]'})
+    db.session.commit()
+
+    # 删
+    for i in range(50, 100, 2):
+        comment = Comment.query.get(i+1)
+        db.session.delete(comment)
+    db.session.commit()
 
 if __name__ == '__main__':
     manager.run()

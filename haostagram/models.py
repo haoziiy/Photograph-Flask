@@ -38,7 +38,7 @@ class User(db.Model):
     head_url = db.Column(db.String(256))
     images = db.relationship('Image', backref='user', lazy='dynamic')
 
-    def __init__(self, username,password):
+    def __init__(self, username, password):
         self.username = username
         self.password = password
         self.head_url = 'http://images.nowcoder.com/head/' + str(random.randint(0, 1000)) + 'm.png'
