@@ -5,14 +5,14 @@
 @import url(../common/footer.css);
 
 .pic-wrapper {
-    max-width: 600px;
+    width: 600px;
     float: left;
     text-align: center;
     background: #f7f7f7;
 }
 .pic-wrapper img {
     display: block;
-    max-width: 600px;
+    width: 600px;
 }
 
 .pic-discuss {

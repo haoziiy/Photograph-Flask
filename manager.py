@@ -53,5 +53,6 @@ def init_database():
         db.session.delete(comment)
     db.session.commit()
 
+
 if __name__ == '__main__':
     manager.run()

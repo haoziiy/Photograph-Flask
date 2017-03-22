@@ -8,3 +8,10 @@ from flask import render_template, redirect
 def index():
     images = Image.query.order_by(db.desc(Image.id)).limit(10).all()
     return render_template('index.html', images=images)
+
+@app.route('/image/<int:image_id>/')
+def image(image_id):
+    image = Image.query.get(image_id)
+    if image==None:
+        return redirect('/')
+    return render_template('pageDetail.html', image = image)
