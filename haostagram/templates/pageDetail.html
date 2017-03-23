@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block title %}详情页{% endblock %}
-{% block css %}/static/styles/pages/detail.css{%  endblock %}
+{% block css %}/static/styles/pages/detail.css{% endblock %}
 {% block content %}
 <div class="page-main clearfix">
     <article>
         <div class="pic-wrapper">
-            <img src="{{ image.url }}">
+            <img src="{{image.url}}">
         </div>
         <div class="pic-discuss">
             <header class="discuss-hd">
@@ -29,17 +29,18 @@
                 </div>
             </section>
             -->
+            {% for comment in image.comments %}
+            {% if loop.index > 10 %}{% break %}{% endif %}
             <ul class="discuss-list">
                 <li>
-                    <h1>
-                        <a>toutvadisparaitre</a>
-                        <span data-reactid=".0.1.0.0.0.2.1.0.0.1">
-                            <span data-reactid=".0.1.0.0.0.2.1.0.0.1.0">和朋友吐一吐是解忧最佳</span>
-                        </span>
-                    </h1>
+                    <!-- <a class=" icon-remove" title="删除评论"></a> -->
+                    <a class="_4zhc5 _iqaka" title="{{comment.user.username}}" href="/profile/{{comment.user.id}}" data-reactid="{{comment.id}}">{{comment.user.username}}</a>
+                    <span>
+                        <span>{{comment.content}}</span>
+                    </span>
                 </li>
-               detail.css
             </ul>
+            {% endfor %}
             <section class="discuss-edit">
                 <a class="icon-heart-empty"></a>
                 <form>

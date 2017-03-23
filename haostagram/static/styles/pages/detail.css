@@ -5,7 +5,7 @@
 @import url(../common/footer.css);
 
 .pic-wrapper {
-    width: 600px;
+    max-width: 600px;
     float: left;
     text-align: center;
     background: #f7f7f7;
@@ -13,8 +13,8 @@
 .pic-wrapper img {
     display: block;
     width: 600px;
+    height: 600px;
 }
-
 .pic-discuss {
     float: left;
     width: 320px;
