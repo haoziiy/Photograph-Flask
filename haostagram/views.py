@@ -1,6 +1,6 @@
 # -*- encoding=UTF-8 -*-
 
-from haostagram import app, db
+from haostagram import app, db, login_manager
 from models import Image, User
 from flask import render_template, redirect, request, flash, get_flashed_messages
 import hashlib, random
@@ -28,6 +28,8 @@ def profile(user_id):
 
 @app.route('/regloginpage/')
 def regloginpage():
+    if current_user.is_authenticated:
+        return redirect('/')
     msg = ''
     for m in get_flashed_messages(with_categories=False, category_filter=['reglogin']):
         msg += m

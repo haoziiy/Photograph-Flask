@@ -2,8 +2,8 @@
 from haostagram import app, db
 from flask_script import Manager
 from haostagram.models import  User, Image, Comment
-from sqlalchemy import or_, and_
-import  random
+# from sqlalchemy import or_, and_
+import random
 
 manager = Manager(app)
 
