@@ -3,8 +3,8 @@
 {% block css %}/static/styles/pages/index.css{%  endblock %}
 {% block content %}
 <div class="page-main clearfix">
-    {% for image in images %}
-        <article class="mod">
+    {% for image in images%}
+    <article class="mod">
         <header class="mod-hd">
             <time class="time">{{ image.created_date }}</time>
             <a href="/profile/{{ image.user.id }}" class="avatar">
@@ -68,16 +68,16 @@
                 {%endfor%}
 
             </ul>
-
-            <section class="discuss-edit">
-                <a class="icon-heart"></a>
-                <form>
-                    <input placeholder="添加评论..." type="text">
-                </form>
-                <button class="more-info">更多选项</button>
-            </section>
         </div>
+        <section class="discuss-edit">
+             <a class="icon-heart"></a>
+            <form>
+                <input placeholder="添加评论..." type="text">
+            </form>
+            <button class="more-info">更多选项</button>
+        </section>
     </article>
     {% endfor %}
+
 </div>
-{% endblock %}
+{% endblock%}

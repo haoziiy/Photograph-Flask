@@ -7,9 +7,24 @@ import hashlib, random, json
 from flask_login import login_user, logout_user, current_user, login_required
 
 @app.route('/')
+@app.route('/index')
 def index():
+    # paginate = Image.query.order_by(db.desc(Image.id)).paginate(page=1, per_page=5)
     images = Image.query.order_by(db.desc(Image.id)).limit(10).all()
-    return render_template('index.html', images=images)
+    return render_template('index.html',images=images)
+#
+# @app.route('/index/<int:user_id>/<int:page>/<int:per_page>/')
+# def index_images(user_id, page, per_page):
+#     # 参数检查
+#     paginate = Image.query.order_by(db.desc(Image.id)).paginate(page=page, per_page=per_page)
+#
+#     map = {'has_next':paginate.has_next}
+#     images = []
+#     for image in paginate.items:
+#         imgvo = {'id':image.id, 'url':image.url, 'comment_count': len(image.comments)}
+#         images.append(imgvo)
+#     map['images'] = images
+#     return json.dumps(map)
 
 @app.route('/image/<int:image_id>/')
 def image(image_id):

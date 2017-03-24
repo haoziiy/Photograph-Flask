@@ -46,7 +46,7 @@
         </header>
         <div class="list-mod">
             <div class="list clearfix js-image-list">
-                {% for image in images: %}
+                {% for image in images %}
                 <a class="item" href="/image/{{image.id}}">
                     <div class="img-box">
                         <img src="{{ image.url }}?imageView/1/w/290/h/290">
@@ -70,10 +70,10 @@
 {% endblock%}
 {% block js %}
 
-<script type="text/javascript">
-    window.uid = {{user.id}};
-</script>
-<script type="text/javascript" src="/static/js/jquery.js"></script>
-<script type="text/javascript" src="/static/js/profile.js"></script>
+    <script type="text/javascript">
+        window.uid = {{ user.id }};
+    </script>
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/profile.js"></script>
 
 {% endblock%}
