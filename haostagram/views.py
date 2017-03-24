@@ -3,7 +3,7 @@
 from haostagram import app, db, login_manager
 from models import Image, User
 from flask import render_template, redirect, request, flash, get_flashed_messages
-import hashlib, random
+import hashlib, random, json
 from flask_login import login_user, logout_user, current_user, login_required
 
 @app.route('/')
@@ -18,13 +18,29 @@ def image(image_id):
         return redirect('/')
     return render_template('pageDetail.html', image=image)
 
+
 @app.route('/profile/<int:user_id>/')
 @login_required
 def profile(user_id):
     user = User.query.get(user_id)
-    if user==None:
+    if user == None:
         return redirect('/')
-    return render_template('profile.html', user=user)
+    paginate = Image.query.filter_by(user_id=user_id).paginate(page=1, per_page=3)
+    return render_template('profile.html', user = user, has_next=paginate.has_next, images=paginate.items)
+
+@app.route('/profile/images/<int:user_id>/<int:page>/<int:per_page>/')
+def user_images(user_id, page, per_page):
+    # 参数检查
+    paginate = Image.query.filter_by(user_id=user_id).paginate(page=page, per_page=per_page)
+
+    map = {'has_next':paginate.has_next}
+    images = []
+    for image in paginate.items:
+        imgvo = {'id':image.id, 'url':image.url, 'comment_count': len(image.comments)}
+        images.append(imgvo)
+    map['images'] = images
+    return json.dumps(map)
+
 
 @app.route('/regloginpage/')
 def regloginpage():

@@ -4,6 +4,7 @@ from haostagram import db, login_manager
 import random
 
 class Comment(db.Model):
+    __table_args__ = {'mysql_collate': 'utf8_general_ci'}
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     content = db.Column(db.String(1024))
     image_id = db.Column(db.Integer, db.ForeignKey('image.id'))

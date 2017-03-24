@@ -49,17 +49,18 @@
                 -->
                 <li class="more-discuss">
                     <a>
-                        <span>全部 </span><span class="">{{ image.comment|length }}</span>
+                        <span>全部 </span><span class="">{{image.comments|length}}</span>
                         <span> 条评论</span></a>
                 </li>
                 {% for comment in image.comments %}
                 {% if loop.index > 2 %} {% break %} {% endif %}
                 <li>
                     <!-- <a class=" icon-remove" title="删除评论"></a> -->
-                    <a class="_4zhc5 _iqaka" title="zjuyxy" href="/profile/{{comment.user_id}}"
+                    <a class="_4zhc5 _iqaka" title="zjuyxy"
+
+                       href="/profile/{{comment.user_id}}"
                        data-reactid=".0.1.0.0.0.2.1.2:$comment-17856951190001917.1">
-                        {{comment.user.username}}
-                    </a>
+                        {{comment.user.username}}</a>
                     <span>
                         <span>{{comment.content}}</span>
                     </span>
