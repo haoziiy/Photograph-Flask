@@ -198,7 +198,7 @@ hr {
   border:none;
   border-bottom:1px solid #cfcfcf;
   margin-bottom:10px;
-  *color:pink; *filter:chroma(color=pink);
+  *color: #ffc0cb; *filter:chroma(pink);
   height:10px;
   *margin:-7px 0 2px;
 }
