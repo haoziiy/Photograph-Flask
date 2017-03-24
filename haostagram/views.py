@@ -40,7 +40,34 @@ def redirect_with_msg(target, msg, category):
         flash(msg, category=category)
     return redirect(target)
 
-@app.route('/reg/',methods={'post','get'})
+@app.route('/login/', methods={'get', 'post'})
+def login():
+    username = request.values.get('username').strip()
+    password = request.values.get('password').strip()
+    # 校验
+    user = User.query.filter_by(username=username).first()
+    if username == '' or password == '':
+        return redirect_with_msg('/regloginpage', u'用户名和密码不能为空', 'reglogin')
+
+    user = User.query.filter_by(username=username).first()
+    if user == None:
+        return redirect_with_msg('/regloginpage', u'用户名不存在', 'reglogin')
+
+    m = hashlib.md5()
+    m.update(password + user.salt)
+    if m.hexdigest() != user.password:
+        return redirect_with_msg('/regloginpage', u'密码错误', 'reglogin')
+
+    login_user(user)
+
+    next = request.values.get('next')
+    if next != None and next.startswith('/') > 0:
+        return redirect(next)
+    return redirect('/')
+
+
+
+@app.route('/reg/', methods={'post', 'get'})
 def reg():
     # request.args
     # request.form
@@ -63,7 +90,7 @@ def reg():
     db.session.add(user)
     db.session.commit()
 
-    logout_user(user)
+    login_user(user)
 
     return redirect('/')
 

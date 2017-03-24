@@ -47,19 +47,24 @@ class User(db.Model):
         self.head_url = 'http://images.nowcoder.com/head/' + str(random.randint(0, 1000)) + 'm.png'
 
     def __repr__(self):
-        return '<User %d %s>' % (self.id, self.username)
+        return ('<User %d %s>' % (self.id, self.username)).encode('gbk')
 
-    @property
+        # Flask Login接口
+
     def is_authenticated(self):
+        print 'is_authenticated'
         return True
-    @property
+
     def is_active(self):
+        print 'is_active'
         return True
-    @property
+
     def is_anonymous(self):
+        print 'is_anonymous'
         return False
-    @property
+
     def get_id(self):
+        print 'get_id'
         return self.id
 
 @login_manager.user_loader
