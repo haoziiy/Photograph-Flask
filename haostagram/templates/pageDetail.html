@@ -9,11 +9,11 @@
         </div>
         <div class="pic-discuss">
             <header class="discuss-hd">
-                <a href="/profile/{{ image.user.username }}" class="avatar">
+                <a href="/profile/{{ image.user.id }}" class="avatar">
                     <img src="{{ image.user.head_url }}">
                 </a>
                 <div class="profile-info">
-                    <a title="{{ image.user.username }}" href="{{ image.user.id }}">{{ image.user.username }}</a>
+                    <a title="{{ image.user.username }}" href="/profile/{{ image.user.id }}">{{ image.user.username }}</a>
                 </div>
             </header>
             <!--
