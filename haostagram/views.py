@@ -2,7 +2,7 @@
 import os, uuid
 
 from haostagram import app, db, login_manager
-from models import Image, User
+from models import Image, User, Comment
 from flask import render_template, redirect, request, flash, get_flashed_messages, send_from_directory
 import hashlib, random, json
 from flask_login import login_user, logout_user, current_user, login_required
@@ -158,3 +158,15 @@ def upload():
 def view_image(image_name):
     return send_from_directory(app.config['UPLOAD_DIR'], image_name)
 
+@app.route('/addcomment/', methods={'post'})
+@login_required
+def add_comment():
+    image_id = int(request.values['image_id'])
+    content = request.values['content']
+    comment = Comment(content, image_id, current_user.id)
+    db.session.add(comment)
+    db.session.commit()
+    return json.dumps({"code": 0, "id": comment.id,
+                       "content": comment.content,
+                       "username": comment.user.username,
+                       "user_id": comment.user_id})
