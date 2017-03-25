@@ -4,6 +4,7 @@ from flask_script import Manager
 from haostagram.models import  User, Image, Comment
 # from sqlalchemy import or_, and_
 import random
+import unittest
 
 manager = Manager(app)
 
@@ -53,6 +54,12 @@ def init_database():
     #     db.session.delete(comment)
     # db.session.commit()
 
+@manager.command
+def run_test():
+    db.drop_all()
+    db.create_all()
+    tests = unittest.TestLoader().discover('./')
+    unittest.TextTestRunner().run(tests)
 
 
 if __name__ == '__main__':
