@@ -1,8 +1,10 @@
 # -*- encoding=UTF-8 -*-
+import os, uuid
+from qiniu import Auth
 
 from haostagram import app, db, login_manager
 from models import Image, User
-from flask import render_template, redirect, request, flash, get_flashed_messages
+from flask import render_template, redirect, request, flash, get_flashed_messages, send_from_directory
 import hashlib, random, json
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -129,3 +131,31 @@ def reg():
 def logout():
     logout_user()
     return redirect('/')
+
+def save_to_local(file, file_name):
+    save_dir = app.config['UPLOAD_DIR']
+    file.save(os.path.join(save_dir, file_name))
+    return '/image/' + file_name
+
+@app.route('/upload/', methods={'post'})
+def upload():
+    # print type(request.files)
+    file = request.files['file']
+    # dir(file)
+    file.ext = ''
+
+    if file.filename.find('.') > 0:
+        file.ext = file.filename.rsplit('.', 1)[1].strip().lower()
+    if file.ext in app.config['ALLOWED_EXT']:
+        file_name = str(uuid.uuid1()).replace('-', '') + '.' + file.ext
+        url = save_to_local(file, file_name)
+        if url != None:
+            db.session.add(Image(url, current_user.id))
+            db.session.commit()
+
+    return redirect('/profile/%d' % current_user.id)
+
+@app.route('/image/<image_name>')
+def view_image(image_name):
+    return send_from_directory(app.config['UPLOAD_DIR'], image_name)
+
