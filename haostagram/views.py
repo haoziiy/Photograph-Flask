@@ -10,22 +10,36 @@ from flask_login import login_user, logout_user, current_user, login_required
 @app.route('/')
 @app.route('/index')
 def index():
-    # paginate = Image.query.order_by(db.desc(Image.id)).paginate(page=1, per_page=5)
-    images = Image.query.order_by(db.desc(Image.id)).limit(10).all()
-    return render_template('index.html',images=images)
-#
-# @app.route('/index/<int:user_id>/<int:page>/<int:per_page>/')
-# def index_images(user_id, page, per_page):
-#     # 参数检查
-#     paginate = Image.query.order_by(db.desc(Image.id)).paginate(page=page, per_page=per_page)
-#
-#     map = {'has_next':paginate.has_next}
-#     images = []
-#     for image in paginate.items:
-#         imgvo = {'id':image.id, 'url':image.url, 'comment_count': len(image.comments)}
-#         images.append(imgvo)
-#     map['images'] = images
-#     return json.dumps(map)
+    paginate = Image.query.order_by(db.desc(Image.id)).paginate(page=1, per_page=5)
+   #images = Image.query.order_by(db.desc(Image.id)).limit(10).all()
+    return render_template('index.html', has_next=paginate.has_next, images=paginate.items)
+
+@app.route('/index/images/<int:page>/<int:per_page>/')
+def index_images(page, per_page):
+    # 参数检查
+    paginate = Image.query.order_by(db.desc(Image.id)).paginate(page=page, per_page=per_page, error_out=False)
+
+    map = {'has_next': paginate.has_next}
+    images = []
+    for image in paginate.items:
+        comments = []
+        for i in range(0, min(2, len(image.comments))):
+            comment = image.comments[i]
+            comments.append({'username': comment.user.username,
+                             'user_id': comment.user_id,
+                             'content': comment.content
+                             })
+        imgvo = {'id': image.id,
+                 'url': image.url,
+                 'comment_count': len(image.comments),
+                 'user_id': image.user_id,
+                 'head_url': image.user.head_url,
+                 'created_date': str(image.created_date),
+                 'comments': comments
+                 }
+        images.append(imgvo)
+    map['images'] = images
+    return json.dumps(map)
 
 @app.route('/image/<int:image_id>/')
 def image(image_id):

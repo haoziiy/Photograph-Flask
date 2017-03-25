@@ -68,15 +68,22 @@
                 {%endfor%}
 
             </ul>
+
         </div>
-        <section class="discuss-edit">
-             <a class="icon-heart"></a>
-            <form>
-                <input placeholder="添加评论..." type="text">
-            </form>
-            <button class="more-info">更多选项</button>
-        </section>
+
     </article>
     {% endfor %}
+
+    {% if has_next %}
+    <div class="more-content js-load-more">
+        <a class="_oidfu" href="javascript:void(0);">更多</a>
+    </div>
+    {% endif %}
+
 </div>
+{% endblock%}
+
+{% block js %}
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/index.js"></script>
 {% endblock%}
