@@ -1,6 +1,5 @@
 # -*- encoding=UTF-8 -*-
 import os, uuid
-from qiniu import Auth
 
 from haostagram import app, db, login_manager
 from models import Image, User
